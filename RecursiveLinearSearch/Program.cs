@@ -1,50 +1,33 @@
-﻿using System;
+﻿
+using System;
 
 namespace RecursiveLinearSearch
 {
     class Program
     {
 
-        public static int RecursiveLinearSearch(int[] values, int searchKey, int startingIndex)
-        {
-            int[] valuesTemp = values;
-            int searchKeyCounter = searchKey;
-            int startingIndexCounter = startingIndex;
-
-            if (values[startingIndex] == searchKey)
-            {
-                return values[startingIndex];
-            }
-            else if(startingIndex >= values.Length)
-            {
-                return -1;
-            }
-            else
-            {
-            searchKeyCounter++;
-            startingIndexCounter++;
-            RecursiveLinearSearch(valuesTemp, searchKeyCounter, startingIndexCounter);
-            }
-            return -1;
-        }
-
         
-        static void Main(string[] args)
+
+        public static void RunRecursiveLinearSearch()
         {
+
             var random = new Random();
             var data = new int[10];
-            var searchIndex = 7;
+            int searchIndex;
 
             for (int i = 0; i < data.Length; ++i)
             {
                 data[i] = random.Next(0, 50);
             }
-            
+
             foreach (int x in data)
             {
-                Console.Write(x);
+                Console.Write($"{x}, ");
             }
             Console.WriteLine("\n");
+
+            Console.Write("Enter number to search for: ");
+            searchIndex = int.Parse(Console.ReadLine());
 
             int position = RecursiveLinearSearch(data, searchIndex, 0);
 
@@ -56,6 +39,47 @@ namespace RecursiveLinearSearch
             {
                 Console.WriteLine($"int {position} found");
             }
+
+
+            static int RecursiveLinearSearch(int[] values, int searchKey, int startingIndex)
+            {
+
+                if (values[startingIndex] == searchKey)
+                {
+                    return values[startingIndex];
+                }
+                if (startingIndex >= values.Length - 1)
+                {
+                    return -1;
+                }
+            
+                return RecursiveLinearSearch(values, searchKey, startingIndex + 1);
+                
+               
+            }
+        }
+
+        
+        static void Main(string[] args)
+        {
+            RunRecursiveLinearSearch();
+            int response = 0;
+            while (response != -1)
+            {
+                Console.WriteLine("Enter -1 to Exit and 1 to Search Again");
+                response = int.Parse(Console.ReadLine());
+                if (response == 1)
+                {
+                    Console.WriteLine("\n");
+                    RunRecursiveLinearSearch();
+                }
+                else if (response != -1)
+                {
+                    Console.WriteLine("Incorrect response entered...Try again");
+                }
+            }
+            Console.ReadLine();
+
         }
     }
 }
